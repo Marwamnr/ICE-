@@ -1,0 +1,35 @@
+@startuml
+'https://plantuml.com/object-diagram
+!pragma layout smetana
+
+object User
+object House
+object Kitchen
+object Bedroom
+object Bathroom
+object Livingroom
+object Basement
+object Login
+object CreateNewUser
+object Menu
+object startmenu
+object mainmenu
+
+
+ Kitchen --> House
+ Bedroom --> House
+ Bathroom --> House
+ Livingroom --> House
+ Basement --> House
+
+Login --> User
+CreateNewUser --> User
+User --> startmenu
+House --> mainmenu
+
+startmenu --> Menu
+mainmenu --> Login
+mainmenu --> CreateNewUser
+
+
+@enduml

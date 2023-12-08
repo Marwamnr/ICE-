@@ -1,0 +1,120 @@
+@startuml
+'https://plantuml.com/class-diagram
+!pragma layout smetana
+
+class FileIO
+class Bedroom
+class Kitchen
+class Bathroom
+class Livingroom
+class Basement
+Abstract Class House
+class TextUI
+class User
+class Menu
+class Main
+
+
+
+Main *-- Menu
+Menu *-- User
+Menu *-- House
+Menu *-- FileIO
+Menu *-- TextUI
+User *-- FileIO
+User *-- TextUI
+House *-- FileIO
+House *-- TextUI
+House *-- Kitchen
+House *-- Bathroom
+House *-- Livingroom
+House *-- Basement
+House *-- Bedroom
+TextUI --* Kitchen
+TextUI --* Bathroom
+TextUI --* Livingroom
+TextUI --* Basement
+TextUI --* Bedroom
+
+
+
+
+class TextUI
+{
+Scanner scanner
+
+public String getInput()
+public void displayMessage()
+}
+
+class FileIO {
+File file
+Filewriter writer
+public void saveLogin(Arraylist<user> login)
+public boolean readFile()
+public Arraylist<String> scanGame()
+}
+
+class Main {
+public static void main ()
+}
+
+
+Abstract class House {
+FileIO fileIO
+TextUI textUI
+}
+
+
+class User{
+private String username;
+private String password;
+private HashSet<House> savedGame
+public String getUsername()
+public String getPassword()
+public HashSet<House> getSavedGame()
+public String toString()
+
+}
+
+class Menu {
+FileIO fileIO
+TextUI textUI
+public menu()
+public void startMenu()
+public void mainMenu()
+login()
+createNewUser()
+public void playGame()
+public void saveGame()
+public void continueGame()
+public void endGame ()
+public void gameRules ()
+}
+
+
+class Kitchen {
+TextUI textUI
+}
+
+class Bathroom {
+TextUI textUI
+
+}
+
+class Basement {
+TextUI textUI
+
+}
+
+class Bedroom {
+TextUI textUI
+
+}
+
+class Livingroom {
+TextUI textUI
+}
+
+
+@enduml
