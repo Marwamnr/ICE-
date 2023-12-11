@@ -3,6 +3,16 @@ import java.util.ArrayList;
 public class Menu {
     TextUI ui = new TextUI();
     FileIO io = new FileIO();
+
+    Livingroom livingroom = new Livingroom();
+    Kitchen kitchen = new Kitchen();
+
+    Bedroom bedroom = new Bedroom();
+
+    Bathroom bathroom = new Bathroom();
+
+    Basement basement= new Basement();
+
     ArrayList<User> login = new ArrayList<>();
 
     User user = new User("", "");
@@ -43,10 +53,10 @@ public class Menu {
         int inputInt = Integer.valueOf(input);
         switch (inputInt) {
             case 1:
-                saveGame();
+                playGame();
                 break;
             case 2:
-                playGame();
+                saveGame();
                 break;
             case 3:
                 continueGame();
@@ -95,7 +105,35 @@ public class Menu {
 
     public void playGame() {
 
-        ui.displayMessage(" Welcome to Mystic Mansion, Please select a room in the house to investigate");
+        int input = ui.getIntInput(" Welcome to Mystic Mansion. You have the possibility to explore the house. Please select a room in the house to investigate:" +
+
+                "\n 1: Livingroom" +
+                "\n 2: Kitchen" +
+                "\n 3: Bedroom" +
+                "\n 4: Bathroom" +
+                "\n 5: Basement");
+
+        switch (input) {
+            case 1:
+                livingroom.Livingroom();
+                break;
+            case 2:
+                kitchen.Kitchen();
+                break;
+            case 3:
+                bedroom.Bedroom();
+                break;
+            case 4:
+                bathroom.Bathroom();
+                break;
+            case 5:
+                basement.Basement();
+                break;
+            default:
+                ui.displayMessage("Please write a number between 1-5");
+
+
+        }
     }
 
     public void saveGame() {

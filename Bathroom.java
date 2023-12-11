@@ -1,2 +1,13 @@
 public class Bathroom {
-    TextUI ui = new TextUI();}
+    TextUI ui = new TextUI();
+
+    public Bathroom(){
+
+    }
+
+    public void Bathroom(){
+
+    }
+}
+
+
