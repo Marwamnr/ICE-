@@ -42,9 +42,9 @@ TextUI --* Bedroom
 class TextUI
 {
 Scanner scanner
-
 public String getInput()
 public void displayMessage()
+public String getIntInput()
 }
 
 class FileIO {
