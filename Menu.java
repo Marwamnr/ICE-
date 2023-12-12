@@ -3,6 +3,11 @@ import java.util.ArrayList;
 public class Menu {
     TextUI ui = new TextUI();
     FileIO io = new FileIO();
+    Livingroom livingroom = new Livingroom();
+    Kitchen kitchen = new Kitchen();
+    Bedroom bedroom = new Bedroom();
+    Bathroom bathroom = new Bathroom();
+    Basement basement= new Basement();
     ArrayList<User> login = new ArrayList<>();
 
     User user = new User("", "");
@@ -43,10 +48,10 @@ public class Menu {
         int inputInt = Integer.valueOf(input);
         switch (inputInt) {
             case 1:
-                saveGame();
+                playGame();
                 break;
             case 2:
-                playGame();
+                saveGame();
                 break;
             case 3:
                 continueGame();
@@ -89,25 +94,66 @@ public class Menu {
         } catch(RuntimeException e) {
             // Log or handle the exception
             ui.displayMessage("Error occurred: " + e.getMessage());
-
         }
     }
 
     public void playGame() {
+        int input = ui.getIntInput(" Welcome to Mystic Mansion. You have the possibility to explore the house. Please select a room in the house to investigate:" +
 
-        ui.displayMessage(" Welcome to Mystic Mansion, Please select a room in the house to investigate");
+                "\n 1: Livingroom" +
+                "\n 2: Kitchen" +
+                "\n 3: Bedroom" +
+                "\n 4: Bathroom" +
+                "\n 5: Basement");
+
+        switch (input) {
+            case 1:
+                livingroom.Livingroom();
+                break;
+            case 2:
+                kitchen.Kitchen();
+                break;
+            case 3:
+                bedroom.Bedroom();
+                break;
+            case 4:
+                bathroom.Bathroom();
+                break;
+            case 5:
+                basement.Basement();
+                break;
+            default:
+                ui.displayMessage("Please write a number between 1-5");
+        }
     }
 
     public void saveGame() {
-
+        /*Boolean isValid = false;
+        String choice = ui.getInput("Do you want to save or end game? ");
+        if(choice.equals("save")) {
+            user.addToSaveGame(gameFindInFile, user);
+            ui.displayMessage("Your game has been saved.");
+            isValid = true;
+        } else if(choice.equals("end game")) {
+            endGame(gameFindInFile, user);
+            ui.displayMessage("Your game is end. ");
+            isValid = true;
+        } else {
+            ui.displayMessage("Please write save or end game");
+        }*/
     }
 
     public void continueGame() {
+
     }
 
     public void endGame() {
     }
 
     public void gameRules() {
+        ui.displayMessage("Games rules for the Mystic Mansion");
+        ui.displayMessage("The house contains different rooms, such as kitchen, bedroom, bathroom, living room and basement, \n" +
+                "each filled with puzzles and challenges. \n" +
+                "Selecting a room gives you a list of items to explore.");
     }
 }

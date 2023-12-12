@@ -11,6 +11,12 @@ public class User {
         this.username = username;
         this.password = password;
     }
+
+    public void addToSaveGame(String gameFindInFile, User user) {
+        FileIO io = new FileIO();
+        saveGame.add(gameFindInFile);
+        io.saveGameToFile("saveGame.txt", user);
+    }
     public String getUsername()
     {
         return username;

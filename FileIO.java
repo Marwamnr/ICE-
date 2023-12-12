@@ -77,6 +77,19 @@ public class FileIO {
         return false;
     }
 
+    public void saveGameToFile(String path, User user) {
+        TextUI ui = new TextUI();
+        try {
+            FileWriter writer = new FileWriter(path, true);
+            String textTosave = String.valueOf(user.getSaveGame(user));
+            writer.write(textTosave + "\n");
+
+            writer.close();
+        } catch (IOException e) {
+            ui.displayMessage("Something went wrong while writing to file ");
+        }
+    }
+
     public ArrayList<String> scanGame() {
         return null;
     }
