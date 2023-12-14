@@ -1,6 +1,7 @@
 public class Kitchen {
 
 
-    public void Kitchen() {
+    public boolean Kitchen() {
+        return true;
     }
 }

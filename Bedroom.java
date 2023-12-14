@@ -1,6 +1,7 @@
 public class Bedroom {
     TextUI ui = new TextUI();
 
-    public void Bedroom() {
+    public boolean Bedroom() {
+        return true;
     }
 }

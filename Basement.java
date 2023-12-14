@@ -1,9 +1,7 @@
-import javax.swing.*;
-
 public class Basement {
     TextUI ui = new TextUI();
 
-    public void Basement() {
+    public boolean Basement() {
         int input = ui.getIntInput(" Now you are in the basement, with the creepy surroundings and darkness! \n" +
                 "In the basement there is: " +
 
@@ -21,7 +19,9 @@ public class Basement {
                 ui.displayMessage("Please write a number between 1-2");
         }
 
+        return true;
     }
+
     private void Packages() {
     }
     private void Doll() {
