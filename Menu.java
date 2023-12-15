@@ -1,16 +1,28 @@
 import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.BufferedWriter;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 public class Menu {
     TextUI ui = new TextUI();
     FileIO io = new FileIO();
+
     Livingroom livingroom = new Livingroom();
     Kitchen kitchen = new Kitchen();
     Bedroom bedroom = new Bedroom();
     Bathroom bathroom = new Bathroom();
-    Basement basement= new Basement();
+    Basement basement = new Basement();
+
     ArrayList<User> login = new ArrayList<>();
 
     User user = new User("", "");
+
+    private String saveGame = "saveGame.txt";
+
+    public String currentRoom;
+
 
     public Menu() {
     }
@@ -37,7 +49,7 @@ public class Menu {
         io.readLoginFromFile("data.txt");
     }
 
-    public void  mainMenu(User user) {
+    public void mainMenu(User user) {
         String input = ui.getInput("Please select one of the following: " +
                 "\n 1: Start a new game" +
                 "\n 2: Save game" +
@@ -76,81 +88,112 @@ public class Menu {
         io.saveLogin(login);
         mainMenu(user);
     }
-    public void login(User user)
-    {
+
+    public void login(User user) {
         FileIO io = new FileIO();
         String inputUsername = ui.getInput("Please write your username: ");
         String inputPassword = ui.getInput("Please write your password: ");
         try {
             boolean loggedIn = (io.readFile(inputUsername, inputPassword, "data.txt"));
-            if(loggedIn)
-            {
+            if (loggedIn) {
                 ui.displayMessage("Welcome back!");
                 mainMenu(user);
             } else {
                 ui.displayMessage("Sorry! Something went wrong, please try again later.");
                 //Handle the unsuccessful login
             }
-        } catch(RuntimeException e) {
+        } catch (RuntimeException e) {
             // Log or handle the exception
             ui.displayMessage("Error occurred: " + e.getMessage());
         }
     }
 
     public void playGame() {
-        int input = ui.getIntInput(" Welcome to Mystic Mansion. You have the possibility to explore the house. Please select a room in the house to investigate:" +
+        boolean continueGame = true;
 
-                "\n 1: Livingroom" +
-                "\n 2: Kitchen" +
-                "\n 3: Bedroom" +
-                "\n 4: Bathroom" +
-                "\n 5: Basement");
+        ui.displayMessage(" Welcome to Mystic Mansion. You have the possibility to explore the house.");
 
-        switch (input) {
-            case 1:
-                livingroom.Livingroom();
-                break;
-            case 2:
-                kitchen.Kitchen();
-                break;
-            case 3:
-                bedroom.Bedroom();
-                break;
-            case 4:
-                bathroom.Bathroom();
-                break;
-            case 5:
-                basement.Basement();
-                break;
-            default:
-                ui.displayMessage("Please write a number between 1-5");
+        while (continueGame) {
+            int input = ui.getIntInput(" Please select a room in the house to investigate:" +
+
+                    "\n 1: Livingroom" +
+                    "\n 2: Kitchen" +
+                    "\n 3: Bedroom" +
+                    "\n 4: Bathroom" +
+                    "\n 5: Basement" +
+                    "\n 6: Back to Main menu \n");
+
+            switch (input) {
+                case 1:
+                    continueGame = livingroom.Livingroom();
+                    currentRoom="Livingroom";
+                    break;
+                case 2:
+                    continueGame = kitchen.Kitchen();
+                    currentRoom="Kitchen";
+                    break;
+                case 3:
+                    continueGame = bedroom.Bedroom();
+                    currentRoom="Bedroom";
+                    break;
+                case 4:
+                    continueGame = bathroom.Bathroom();
+                    currentRoom="Bathroom";
+                    break;
+                case 5:
+                    continueGame = basement.Basement();
+                    currentRoom="Basement";
+                    break;
+                case 6:
+                    BacktoMainmenu();
+                    break;
+                default:
+                    ui.displayMessage("Please write a number between 1-6");
+            }
         }
+        ui.displayMessage("Thank you for visiting Mystic Mansion. See you next time");
+    }
+
+    private boolean BacktoMainmenu() {
+        boolean backToMainMenu = true;
+
+        if (backToMainMenu) {
+            saveGame();
+            mainMenu(user);
+        }
+        return false;
     }
 
     public void saveGame() {
-        /*Boolean isValid = false;
-        String choice = ui.getInput("Do you want to save or end game? ");
-        if(choice.equals("save")) {
-            user.addToSaveGame(gameFindInFile, user);
-            ui.displayMessage("Your game has been saved.");
-            isValid = true;
-        } else if(choice.equals("end game")) {
-            endGame(gameFindInFile, user);
-            ui.displayMessage("Your game is end. ");
-            isValid = true;
-        } else {
-            ui.displayMessage("Please write save or end game");
-        }*/
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(saveGame))) {
+            writer.write("Currentroom:" + currentRoom);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void continueGame() {
-
+    String continueGame() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(saveGame))) {
+            String room = reader.readLine();
+            if (room != null && room.startsWith("Currentroom:")) {
+                String savedGame = room.substring("Currentroom:".length());
+                System.out.print("Welcome back. You are in room: "+ savedGame +".");
+                return savedGame;
+            } else {
+                System.out.println("There is no saved game, would you like to start a new game?");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "something went wrong";
     }
 
-    public void endGame() {
+    public void endGame () {
+        ui.displayMessage("Thanks for playing the game, See you next time!");
+        System.exit(0);
     }
 
-    public void gameRules() {
+    public void gameRules () {
         ui.displayMessage("Games rules for the Mystic Mansion");
         ui.displayMessage("The house contains different rooms, such as kitchen, bedroom, bathroom, living room and basement, \n" +
                 "each filled with puzzles and challenges. \n" +
